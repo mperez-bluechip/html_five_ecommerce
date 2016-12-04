@@ -1,3 +1,4 @@
+var theFaves = document.getElementById('faves');
 $('.painting')
 	.bind('dragstart', function (evt) {
 		evt.dataTransfer.setData('text', this.id);
@@ -30,6 +31,22 @@ $('#favorites')
 				data : { id : id }
 			}).appendTo(favList);
 		$('#favorites').css('background-color','#A858A3');
+		
+		saveFaves();
+
 		evt.stopPropagation();
 		return false;
 	});
+	
+	function saveFaves() {
+		localStorage.setItem('favorites', theFaves.innerHTML);
+	};
+	
+	loadFaves();
+	
+	function loadFaves() {
+		  // when the page loads
+	  if ( localStorage.getItem('favorites') ) {
+		theFaves.innerHTML = localStorage.getItem('favorites'); 
+	  }
+	}

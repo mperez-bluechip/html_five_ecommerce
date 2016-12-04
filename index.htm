@@ -53,7 +53,7 @@
       <div id="painting5" class="painting" draggable="true"><img src="_images/paintings/patterns.jpg" width="190" height="190" alt="Patterns">
         <p>Patterns - <span class="price">$200</span></p>
       </div>
-      <div id="painting6" class="painting lastOne"> <img src="_images/paintings/rabbit.jpg" width="190" height="190" alt="Rabbigt">
+      <div id="painting6" class="painting lastOne" draggable="true"> <img src="_images/paintings/rabbit.jpg" width="190" height="190" alt="Rabbigt">
         <p>Rabbit - <span class="price">$350</span></p>
       </div>
     </article>
@@ -65,7 +65,7 @@
         <form name="form1" method="post" action="">
           <p>
             <input id="slider" type="range" min="50" max="400" step="25" value="400" onchange="printValue('slider','rangeValue')" />
-	        <input id="rangeValue" type="text" size="3"/>
+	        <input id="rangeValue" type="text" size="2"/>
           </p>
         </form>
       </div>
@@ -139,8 +139,8 @@
   </nav>
   <p>&copy;Copyright  Roux Academy of Art &amp; Design.  All rights reserved. <a href="_source/privacy.htm" title="privacy statement">Privacy Statement</a> |<a href="_source/legal.htm" title="legal terms"> Legal Terms and Conditions</a> |<a href="_source/disclosures.htm" title="student outcomes and disclosures"> Student Outcomes/Disclosures</a></p>
 </footer>
-<script src="_scripts/jquery.ndd.js" type="text/javascript"></script>
-<script src="_scripts/dragdrop.js" type="text/javascript"></script>
+<script type="text/javascript" src="_scripts/jquery.ndd.js"></script>
+<script type="text/javascript" src="_scripts/dragdrop.js"></script>
 <script>
         function printValue(sliderID, textbox) {
             var x = document.getElementById(textbox);
@@ -151,43 +151,39 @@
         window.onload = function() { printValue('slider', 'rangeValue') }
 </script>
 <script>
-// Set price data for paintings
+	$('#painting1').data({ id:1, price:250 });
+	$('#painting2').data({ id:2, price:400 });
+	$('#painting3').data({ id:3, price:75 });
+	$('#painting4').data({ id:4, price:150 });
+	$('#painting5').data({ id:5, price:200 });
+	$('#painting6').data({ id:6, price:350 });
 
-  $('#painting1').data({ id:1, price:250 });
-  $('#painting2').data({ id:2, price:400 });
-  $('#painting3').data({ id:3, price:75 });
-  $('#painting4').data({ id:4, price:150 });
-  $('#painting5').data({ id:5, price:200 });
-  $('#painting6').data({ id:6, price:350 });
+	$(document).ready(function () {
+		var theValue;
 
-  // Link range to paintings
-  	$(document).ready(function () {
-  		var theValue;
+		$("#slider").change(function() {
+			theValue = $("#rangeValue").val();
+			filterItems(theValue) ;
+		});
+	});
 
-  		$("#slider").change(function() {
-  			theValue = $("#rangeValue").val();
-  			filterItems(theValue) ;
-  		});
-  	});
-
-  	function filterItems(priceCriteria)
-  	{
-  		$.each($('#gallery div'), function(i, item) {
-  			$item = $(item);
-  			itemData = $item.data();
-  			if(itemData.price <= priceCriteria)
-  			{
-  				$item.animate({opacity: 1});
-  				itemData.matching = true;
-  			}
-  			else
-  			{
-  				$item.animate({opacity: 0.5});
-  				itemData.matching = false;
-  			}
-  		});
-  	}
-
+	function filterItems(priceCriteria)
+	{
+		$.each($('#gallery div'), function(i, item) {
+			$item = $(item); 
+			itemData = $item.data();
+			if(itemData.price <= priceCriteria) 
+			{
+				$item.animate({opacity: 1});
+				itemData.matching = true;
+			}
+			else
+			{
+				$item.animate({opacity: 0.5});
+				itemData.matching = false;
+			}
+		});
+	}
 </script>
 </body>
 </html>
